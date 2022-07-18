@@ -1,0 +1,22 @@
+version: '3'
+services:
+  api:
+    build: .
+    ports:
+      - 127.0.0.1:8000:8000
+    volumes:
+      - .:/code
+    command:
+      - "./docker-entrypoint.sh"
+    environment:
+      PGEOCODE_DATA_DIR: /tmp/pgeocode_data
+    depends_on:
+      - db
+  db:
+    image: postgres
+    ports:
+      - 127.0.0.1:5432:5432
+    environment:
+      POSTGRES_DB: address
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
